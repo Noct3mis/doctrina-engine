@@ -1,5 +1,3 @@
-import java.awt.*;
-
 public abstract class Game {
 
     private boolean playing = true;
@@ -26,7 +24,7 @@ public abstract class Game {
             update();
             draw(renderingEngine.buildCanvas());
             renderingEngine.drawBufferOnScreen();
-            gameTime.sleep();
+            gameTime.synchronize();
         }
     }
 }
