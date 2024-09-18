@@ -1,3 +1,5 @@
+package Doctrina;
+
 import java.util.concurrent.TimeUnit;
 
 public class GameTime {
@@ -32,7 +34,7 @@ public class GameTime {
         return (currentFps > 0) ? currentFps : fpsCount;
     }
 
-    public GameTime() {
+    protected GameTime() {
         updateSyncTime();
         gameStartTime = System.currentTimeMillis();
         fpsTimeDelta = 0;
