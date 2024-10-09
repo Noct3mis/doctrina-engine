@@ -1,5 +1,7 @@
 package Doctrina;
 
+import java.awt.*;
+
 public abstract class StaticEntity {
     protected int x;
     protected int y;
@@ -16,6 +18,14 @@ public abstract class StaticEntity {
     public void setDimension(int width, int height) {
         this.width = width;
         this.height = height;
+    }
+
+    public boolean intersectWith(StaticEntity entity) {
+        return getBounds().intersects(entity.getBounds());
+    }
+
+    protected Rectangle getBounds() {
+        return new Rectangle(x, y, width, height);
     }
 
     public int getX() {
