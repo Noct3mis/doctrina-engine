@@ -28,6 +28,7 @@ public class Tank extends ControllableEntity {
 
     @Override
     public void update() {
+        super.update();
         moveWithController();
         if (!canFire()) {
             cooldown--;
@@ -42,5 +43,9 @@ public class Tank extends ControllableEntity {
         //float cooldownWidth = alpha * width;
         int cooldownWidth = (cooldown * width) / 10;
         canvas.drawRectangle(x, y -5, cooldownWidth, 2, Color.RED);
+
+        if (hasMoved()) {
+            drawHitBox(canvas);
+        }
     }
 }

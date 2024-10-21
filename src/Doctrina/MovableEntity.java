@@ -6,12 +6,32 @@ public abstract class MovableEntity extends StaticEntity {
 
     private int speed = 1;
     private Direction direction = Direction.UP;
+    private final Collision collision;
 
-    public abstract void update();
+    private int lastX = Integer.MIN_VALUE;
+    private int lastY = Integer.MIN_VALUE;
+    private boolean moved;
+
+    public void update() {
+        moved = false;
+    }
+
+    public MovableEntity() {
+        collision = new Collision(this);
+    }
 
     public void move() {
-        x += direction.calculateVelocityX(speed);
-        y += direction.calculateVelocityY(speed);
+        int allowedSpeed = collision.getAllowedSpeed();
+        x += direction.calculateVelocityX(allowedSpeed);
+        y += direction.calculateVelocityY(allowedSpeed);
+
+        moved = (x != lastX || y != lastY);
+        lastX = x;
+        lastY = y;
+    }
+
+    public boolean hasMoved() {
+        return moved;
     }
 
     public void move(Direction direction) {
@@ -76,6 +96,18 @@ public abstract class MovableEntity extends StaticEntity {
 
     private Rectangle getRightHitBox() {
         return new Rectangle(x + width, y, speed, height);
+    }
+
+    public boolean hitBoxIntersectWith(StaticEntity other) {
+        if (other == null) {
+            return false;
+        }
+        return getHitBox().intersects(other.getBounds());
+    }
+
+    public void drawHitBox(Canvas canvas) {
+        Rectangle rect = getHitBox();
+        canvas.drawRectangle(rect.x, rect.y, rect.width, rect.height, Color.BLUE);
     }
 
     public int getSpeed() {
