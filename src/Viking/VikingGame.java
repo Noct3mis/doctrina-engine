@@ -2,17 +2,18 @@ package Viking;
 
 import Doctrina.Canvas;
 import Doctrina.Game;
-import MovingRectangle.GamePad;
-import MovingRectangle.Player;
 
 public class VikingGame extends Game {
     private Player player;
     private GamePad gamePad;
+    private World world;
 
     @Override
     protected void initialize() {
         gamePad = new GamePad();
         player = new Player(gamePad);
+        world = new World();
+        world.load();
     }
 
     @Override
@@ -25,6 +26,7 @@ public class VikingGame extends Game {
 
     @Override
     protected void draw(Canvas canvas) {
-
+        world.draw(canvas);
+        player.draw(canvas);
     }
 }
