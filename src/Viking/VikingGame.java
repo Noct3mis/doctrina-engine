@@ -13,6 +13,7 @@ public class VikingGame extends Game {
     private GamePad gamePad;
     private World world;
     private Tree tree;
+    private Tree tree2;
 
     private int soundCooldown;
 
@@ -22,8 +23,10 @@ public class VikingGame extends Game {
         player = new Player(gamePad);
         world = new World();
         world.load();
-        tree = new Tree();
+        tree = new Tree(250, 250);
+        tree2 = new Tree(500, 164);
         tree.load();
+        tree2.load();
 
         // TODO: Enum Music
         try {
@@ -46,6 +49,11 @@ public class VikingGame extends Game {
             stop();
         }
         player.update();
+        if (player.getY() < tree.getY() + 52) {
+            tree.blockadeFromTop();
+        } else {
+            tree.blockadeFromBottom();
+        }
 
         soundCooldown--;
         if (soundCooldown < 0) {
@@ -70,5 +78,13 @@ public class VikingGame extends Game {
             tree.draw(canvas);
             player.draw(canvas);
         }
+
+//        if (player.getY() < tree2.getY() + 52) {
+//            player.draw(canvas);
+//            tree2.draw(canvas);
+//        } else {
+//            tree2.draw(canvas);
+//            player.draw(canvas);
+//        }
     }
 }
