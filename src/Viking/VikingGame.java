@@ -2,6 +2,7 @@ package Viking;
 
 import Doctrina.Canvas;
 import Doctrina.Game;
+import Doctrina.RenderingEngine;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -24,6 +25,7 @@ public class VikingGame extends Game {
         tree = new Tree();
         tree.load();
 
+        // TODO: Enum Music
         try {
             Clip clip = AudioSystem.getClip();
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(getClass().getClassLoader().getResourceAsStream("audios/music.wav"));
@@ -33,6 +35,9 @@ public class VikingGame extends Game {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        RenderingEngine.getInstance().getScreen().fullscreen();
+        RenderingEngine.getInstance().getScreen().hideCursor();
     }
 
     @Override
@@ -50,14 +55,7 @@ public class VikingGame extends Game {
         if (gamePad.isFirePressed() && soundCooldown == 0) {
             soundCooldown = 10;
 
-            try {
-                Clip clip = AudioSystem.getClip();
-                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(getClass().getClassLoader().getResourceAsStream("audios/fire.wav"));
-                clip.open(audioInputStream);
-                clip.start();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            SoundEffect.FIRE.play();
         }
     }
 
